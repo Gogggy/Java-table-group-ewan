@@ -1,0 +1,21 @@
+# Compiled Java files
+*.class
+bin/
+out/
+ 
+# Editor / IDE settings
+.vscode/
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+ 
+# OS junk
+.DS_Store
+Thumbs.db
+ 
+# Logs
+*.log
+ 
+# Note: .jar files are NOT ignored, so libraries in lib/ stay shared
