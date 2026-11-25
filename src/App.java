@@ -11,6 +11,48 @@ public class App {
     final static String[] headers = {"ID", "First Name", "Last Name", "Midterm Grade", "Final Grade"};
 
     // TODO YUNG MENU: laman adobo, sinigang, kalderata, menudo, sabaw...
+    static void menu(){
+        int choice = 0;
+    
+            System.out.println("1. Add Student");
+            System.out.println("2. Show Record");
+            System.out.println("3. Edit Record");
+            System.out.println("4. Search Record");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            try {
+                 choice = in.nextInt();
+                in.nextLine();
+            } catch (Exception e) {
+                System.out.println("Invalid input! Please enter a number.");
+                in.nextLine();
+                return;
+            } 
+             
+    
+            switch (choice){
+                case 1:
+                    addStudent(in);
+                    break;
+                case 2:
+                    showRecord();
+                    break;
+                case 3:
+                    System.out.println("Edit Record"); //TODO EDIT RECORD METHOD MARK IKAW NA RITO FUCK YOU
+                    break;
+                case 4:
+                    System.out.println("Search Record"); //TODO SEARCH RECORD METHOD JAMES 
+                    // 
+                case 5:
+                    System.out.println("Exit");
+                    System.exit(0); 
+                    break;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+                    break;
+            }
+        } 
+       
 
     static void addStudent(Scanner in){
 
@@ -37,8 +79,9 @@ public class App {
     }
     public static void main(String[] args) {
 
-        addStudent(in);
-        showRecord();
+        while (true){
+            menu();
+        }
 
     }
 }
