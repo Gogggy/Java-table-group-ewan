@@ -11,6 +11,31 @@ public class App {
     final static String[] headers = {"ID", "First Name", "Last Name", "Midterm Grade", "Final Grade"};
 
     // TODO YUNG MENU: laman adobo, sinigang, kalderata, menudo, sabaw...
+    static void
+    menu(){
+    
+            System.out.println("1. Add Student");
+            System.out.println("2. Show Record");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = in.nextInt();
+            in.nextLine(); // consume the newline character
+    
+            switch (choice){
+                case 1:
+                    addStudent(in);
+                    break;
+                case 2:
+                    showRecord();
+                    break;
+                case 3:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+                    break;
+            }
+        }
 
     static void addStudent(Scanner in){
 
@@ -37,8 +62,9 @@ public class App {
     }
     public static void main(String[] args) {
 
-        addStudent(in);
-        showRecord();
+        while (true){
+            menu();
+        }
 
     }
 }
