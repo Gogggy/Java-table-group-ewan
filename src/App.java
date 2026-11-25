@@ -12,6 +12,7 @@ public class App {
 
     // TODO YUNG MENU: laman adobo, sinigang, kalderata, menudo, sabaw...
     static void menu(){
+        int choice = 0;
     
             System.out.println("1. Add Student");
             System.out.println("2. Show Record");
@@ -19,8 +20,15 @@ public class App {
             System.out.println("4. Search Record");
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
-            int choice = in.nextInt();
-            in.nextLine(); // consume the newline character
+            try {
+                 choice = in.nextInt();
+                in.nextLine();
+            } catch (Exception e) {
+                System.out.println("Invalid input! Please enter a number.");
+                in.nextLine();
+                return;
+            } 
+             
     
             switch (choice){
                 case 1:
@@ -37,7 +45,7 @@ public class App {
                     // 
                 case 5:
                     System.out.println("Exit");
-                    System.exit(0);
+                    System.exit(0); 
                     break;
                 default:
                     System.out.println("Invalid choice! Please try again.");
