@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 public class App {
     // # Variables
     static int cnt = 0; // count of row
@@ -7,10 +8,9 @@ public class App {
     static Scanner in = new Scanner(System.in);
 
     // # Array
-    static String[][] table = new String[100][7]; // 0 = id, 1 = firstname, 2 = lastname, 3 = midtermgrade, 4 = finals grade, 5 = semgrade, 6 = remark
-    final static String[] headers = {"ID", "First Name", "Last Name", "Midterm Grade", "Final Grade"};
+    static String[][] table = new String[100][7]; // 0 = id, 1 = lastname, 2 = firstname, 3 = midtermgrade, 4 = finals grade, 5 = semgrade, 6 = remark
+    final static String[] headers = {"ID", "Last Name", "First Name", "Midterm Grade", "Final Grade", "Semestral Grade", "Remark"};
 
-    // TODO YUNG MENU: laman adobo, sinigang, kalderata, menudo, sabaw...
     static void menu(){
         int choice = 0;
     
@@ -21,7 +21,7 @@ public class App {
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
             try {
-                 choice = in.nextInt();
+                choice = in.nextInt();
                 in.nextLine();
             } catch (Exception e) {
                 System.out.println("Invalid input! Please enter a number.");
@@ -42,7 +42,7 @@ public class App {
                     break;
                 case 4:
                     System.out.println("Search Record"); //TODO SEARCH RECORD METHOD JAMES 
-                    // 
+                    break; // was no break
                 case 5:
                     System.out.println("Exit");
                     System.exit(0); 
@@ -51,28 +51,39 @@ public class App {
                     System.out.println("Invalid choice! Please try again.");
                     break;
             }
-        } 
-       
+        }
+        
+    static double computeGrade(int midgrade, int fingrade){
+        midgrade *= 0.40;
+        fingrade *= 0.60;
+
+        return midgrade + fingrade;
+    }       
 
     static void addStudent(Scanner in){
 
-        for (int c = 0; c < headers.length; c++){
+        for (int c = 0; c < headers.length - 2; c++){
             System.out.print("Enter student " + headers[c] + ": ");
+    
             table[cnt][c] = in.nextLine();
         }
 
-        // TODO Kunin Midterm tas final grade tas i calcu yung sem grade.
+        table[cnt][5] = computeGrade(Integer.parseInt(table[cnt][3]), Integer.parseInt(table[cnt][4])) + "";
+
         // TODO isama narin yung remarks
 
+        System.out.println(String.join(" | ", headers));
+        System.out.println(String.join(" | ", table[cnt]));
         cnt++;
+
         System.out.println("Record added successfully! LUMAYAS KA");
+
     }
 
     static void showRecord(){
 
         System.out.println(String.join(" | ", headers));
     
-
         for (int r = 0; r < cnt; r++){
             System.out.println(String.join(" | ", table[r]));
         }
