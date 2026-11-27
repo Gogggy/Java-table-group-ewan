@@ -18,7 +18,8 @@ public class App {
             System.out.println("2. Show Record");
             System.out.println("3. Edit Record");
             System.out.println("4. Search Record");
-            System.out.println("5. Exit");
+            System.out.println("5. Delete Record");
+            System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
             try {
                 choice = in.nextInt();
@@ -44,6 +45,9 @@ public class App {
                     System.out.println("Search Record"); //TODO SEARCH RECORD METHOD JAMES 
                     break; // was no break
                 case 5:
+                    DeleteRecord();
+                    break;    
+                case 6:
                     System.out.println("Exit");
                     System.exit(0); 
                     break;
@@ -87,6 +91,37 @@ public class App {
         for (int r = 0; r < cnt; r++){
             System.out.println(String.join(" | ", table[r]));
         }
+    }
+    static void DeleteRecord() {
+        if (cnt == 0) {
+        System.out.println("No records available to delete.");
+        return;
+        }
+        System.out.print("Enter the Student ID to delete: ");
+        String targetId = in.nextLine().trim();
+        int foundIndex = -1;
+
+        // So dito hinahanap yung student id na idelete.
+        for (int r = 0; r < cnt; r++) {
+        if (table[r][0] != null && table[r][0].equalsIgnoreCase(targetId)) {
+        foundIndex = r;
+        break;
+            }
+        }
+
+        // 2. dto naman kung wala yung student id na hinahanap.
+        if (foundIndex == -1) {
+            System.out.println("Student with ID '" + targetId + "' not found.");
+            return;
+        }
+
+        // 3. Dito naman idelete yung record at i-shift yung mga susunod na records up.
+        for (int r = foundIndex; r < cnt - 1; r++) {
+            table[r] = table[r + 1];
+        }
+        table[cnt - 1] = new String[7]; 
+        cnt--;
+        System.out.println("\nRecord deleted successfully!\n");
     }
     public static void main(String[] args) {
 
