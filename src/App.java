@@ -39,6 +39,7 @@ public class App {
                     break;
                 case 3:
                     System.out.println("Edit Record"); //TODO EDIT RECORD METHOD MARK IKAW NA RITO FUCK YOU
+                    editRecord();
                     break;
                 case 4:
                     System.out.println("Search Record"); //TODO SEARCH RECORD METHOD JAMES 
@@ -86,6 +87,70 @@ public class App {
     
         for (int r = 0; r < cnt; r++){
             System.out.println(String.join(" | ", table[r]));
+        }
+    }
+     static void editRecord() {
+        if (cnt == 0) {
+            System.out.println("No records available to edit.");
+            return;
+        }
+
+        System.out.print("Enter the Student ID to edit: ");
+        String targetId = in.nextLine().trim();
+
+        int foundIndex = -1;
+
+        // Dto sa part na to hinahanap yung student ID na iedit
+        for (int r = 0; r < cnt; r++) {
+        if (table[r][0] != null && table[r][0].equalsIgnoreCase(targetId)) {
+        foundIndex = r;
+        break;
+            }
+        }
+
+        // 2. Dto kung hindi mahanap yung student ID maglalabas ito na hindi mahanap dba?? 
+        if (foundIndex == -1) {
+        System.out.println("Student with ID '" + targetId + "' not found.");
+        return;
+        }
+
+        // 3. Dto naman papakita muna yung record ng student para malaman kung ano ang ieedit nya ;)
+        System.out.println("\nEditing Record for: " + table[foundIndex][1] + " " + table[foundIndex][2] + " (ID: " + table[foundIndex][0] + ")");
+        System.out.println("Select field to edit:");
+        for (int i = 0; i < headers.length; i++) {
+        System.out.println((i + 1) + ". " + headers[i] + " (Current: " + table[foundIndex][i] + ")");
+        }
+        System.out.println((headers.length + 1) + ". Edit All Fields");
+        System.out.println("0. Cancel");
+        System.out.print("Enter your choice: ");
+
+        int editChoice = 0;
+        try {
+        editChoice = in.nextInt();
+        in.nextLine(); // Clear buffer
+        } catch (Exception e) {
+        System.out.println("Invalid input! Edit cancelled.");
+        in.nextLine();
+        return;
+        }
+
+        // 4. Dto yung process ng pag edit ng record based sa choice ng user rightt...
+        if (editChoice == 0) {
+        System.out.println("Edit cancelled.");
+         return;
+        } else if (editChoice >= 1 && editChoice <= headers.length) {
+         int colIndex = editChoice - 1;
+        System.out.print("Enter new " + headers[colIndex] + ": ");
+        table[foundIndex][colIndex] = in.nextLine();
+         System.out.println(headers[colIndex] + " updated successfully!");
+        } else if (editChoice == headers.length + 1) {
+        for (int c = 0; c < headers.length; c++) {
+        System.out.print("Enter new " + headers[c] + " (Current: " + table[foundIndex][c] + "): ");
+        table[foundIndex][c] = in.nextLine();
+            }
+        System.out.println("All fields updated successfully!");
+        } else {
+         System.out.println("Invalid choice! Edit cancelled.");
         }
     }
     public static void main(String[] args) {
