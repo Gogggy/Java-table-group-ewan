@@ -1,6 +1,4 @@
 import java.util.Scanner;
-import java.util.Arrays;
-
 
 public class App {
     // # Variables
@@ -25,7 +23,7 @@ public class App {
             System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
             try {
-                choice = in.nextInt();
+                 choice = in.nextInt();
                 in.nextLine();
             } catch (Exception e) {
                 System.out.println("Invalid input! Please enter a number.");
@@ -46,8 +44,8 @@ public class App {
                     editRecord();
                     break;
                 case 4:
-                    System.out.println("Search Record"); //TODO SEARCH RECORD METHOD JAMES 
-                    break; // was no break
+                    extracted();
+                    break;
                 case 5:
                     DeleteRecord();
                     break;    
@@ -201,6 +199,77 @@ public class App {
         } else {
             System.out.println("Invalid choice! Edit cancelled.");
         }
+    }
+
+
+    // # RECORD SEARCH
+    public static void extracted() {
+        if (cnt == 0) {
+            System.out.println("No records available.");
+            return;
+        }
+
+        System.out.println(" Search Record ");
+        System.out.println("1. Search by Student ID");
+        System.out.println("2. Search by Name (First Name or Last Name)");
+        System.out.print("Enter your option: ");
+
+        int option;
+        try {
+            option = Integer.parseInt(in.nextLine().trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a number.");
+            return;
+        }
+
+        switch (option) {
+            case 1 -> {
+                System.out.print("Enter Student ID: ");
+                String id = in.nextLine().trim();
+                boolean foundID = false;
+                for (int i = 0; i < cnt; i++) {
+                    if (id.equalsIgnoreCase(table[i][0])) {
+                        displayStudent(i);
+                        foundID = true;
+                        break;
+                    }
+                }
+                if (!foundID) System.out.println("Student ID not found.");
+            }
+
+            case 2 -> {
+                System.out.print("Enter First Name or Last Name: ");
+                String name = in.nextLine().trim().toLowerCase();
+                if (name.isEmpty()) {
+                    System.out.println("Name cannot be empty.");
+                    break;
+                }
+                boolean foundName = false;
+                for (int i = 0; i < cnt; i++) {
+                    // master's column order: 1 = last name, 2 = first name
+                    String last  = table[i][1] == null ? "" : table[i][1].toLowerCase();
+                    String first = table[i][2] == null ? "" : table[i][2].toLowerCase();
+                    if (first.contains(name) || last.contains(name)) {
+                        displayStudent(i);
+                        foundName = true;
+                    }
+                }
+                if (!foundName) System.out.println("Student not found.");
+            }
+
+            default -> System.out.println("Invalid choice! Please enter 1 or 2.");
+        }
+    }
+
+    public static void displayStudent(int i) {
+        System.out.println(" Student Record ");
+        System.out.println("ID: " + table[i][0]);
+        System.out.println("Last Name: " + table[i][1]);
+        System.out.println("First Name: " + table[i][2]);
+        System.out.println("Midterm Grade: " + table[i][3]);
+        System.out.println("Final Grade: " + table[i][4]);
+        System.out.println("Semester Grade: " + table[i][5]);
+        System.out.println("Remark: " + table[i][6]);
     }
  
   
