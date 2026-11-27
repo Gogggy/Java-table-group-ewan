@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Arrays;
 public class App {
     // # Variables
     static int cnt = 0; // count of row
@@ -8,9 +7,10 @@ public class App {
     static Scanner in = new Scanner(System.in);
 
     // # Array
-    static String[][] table = new String[100][7]; // 0 = id, 1 = lastname, 2 = firstname, 3 = midtermgrade, 4 = finals grade, 5 = semgrade, 6 = remark
-    final static String[] headers = {"ID", "Last Name", "First Name", "Midterm Grade", "Final Grade", "Semestral Grade", "Remark"};
+    static String[][] table = new String[100][7]; // 0 = id, 1 = firstname, 2 = lastname, 3 = midtermgrade, 4 = finals grade, 5 = semgrade, 6 = remark
+    final static String[] headers = {"ID", "First Name", "Last Name", "Midterm Grade", "Final Grade"};
 
+    // TODO YUNG MENU: laman adobo, sinigang, kalderata, menudo, sabaw...
     static void menu(){
         int choice = 0;
     
@@ -21,7 +21,7 @@ public class App {
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
             try {
-                choice = in.nextInt();
+                 choice = in.nextInt();
                 in.nextLine();
             } catch (Exception e) {
                 System.out.println("Invalid input! Please enter a number.");
@@ -41,8 +41,8 @@ public class App {
                     System.out.println("Edit Record"); //TODO EDIT RECORD METHOD MARK IKAW NA RITO FUCK YOU
                     break;
                 case 4:
-                    System.out.println("Search Record"); //TODO SEARCH RECORD METHOD JAMES 
-                    break; // was no break
+                    extracted();
+                    break;
                 case 5:
                     System.out.println("Exit");
                     System.exit(0); 
@@ -52,47 +52,82 @@ public class App {
                     break;
             }
         }
-        
-    static double computeGrade(int midgrade, int fingrade){
-        midgrade *= 0.40;
-        fingrade *= 0.60;
 
-        return midgrade + fingrade;
-    }       
 
-    static void addStudent(Scanner in){
-
-        for (int c = 0; c < headers.length - 2; c++){
-            System.out.print("Enter student " + headers[c] + ": ");
-    
-            table[cnt][c] = in.nextLine();
-        }
-
-        table[cnt][5] = computeGrade(Integer.parseInt(table[cnt][3]), Integer.parseInt(table[cnt][4])) + "";
-
-        // TODO isama narin yung remarks
-
-        System.out.println(String.join(" | ", headers));
-        System.out.println(String.join(" | ", table[cnt]));
-        cnt++;
-
-        System.out.println("Record added successfully! LUMAYAS KA");
-
+        public static void extracted() {
+    if (cnt == 0) {
+        System.out.println("No records available.");
+        return;
     }
 
-    static void showRecord(){
+    System.out.println(" Search Record ");
+    System.out.println("1. Search by Student ID");
+    System.out.println("2. Search by Name (First Name or Last Name)");
+    System.out.print("Enter your option: ");
 
-        System.out.println(String.join(" | ", headers));
-    
-        for (int r = 0; r < cnt; r++){
-            System.out.println(String.join(" | ", table[r]));
+    int option;
+        try {
+            option = Integer.parseInt(in.nextLine().trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a number.");
+            return;
+        }
+
+        switch (option) {
+            case 1 -> {
+                System.out.print("Enter Student ID: ");
+                String id = in.nextLine().trim();
+                boolean foundID = false;
+                for (int i = 0; i < cnt; i++) {
+                    if (id.equalsIgnoreCase(table[i][0])) {
+                        displayStudent(i);
+                        foundID = true;
+                        break;
+                    }
+                }
+                if (!foundID) System.out.println("Student ID not found.");
+            }
+
+            case 2 -> {
+                System.out.print("Enter First Name or Last Name: ");
+                String name = in.nextLine().trim().toLowerCase();
+                if (name.isEmpty()) {
+                    System.out.println("Name cannot be empty.");
+                    break;
+                }
+                boolean foundName = false;
+                for (int i = 0; i < cnt; i++) {
+                    String first = table[i][1] == null ? "" : table[i][1].toLowerCase();
+                    String last  = table[i][2] == null ? "" : table[i][2].toLowerCase();
+                    if (first.contains(name) || last.contains(name)) {
+                        displayStudent(i);
+                        foundName = true;
+                    }
+                }
+                if (!foundName) System.out.println("Student not found.");
+            }
+
+            default -> System.out.println("Invalid choice! Please enter 1 or 2.");
         }
     }
-    public static void main(String[] args) {
 
-        while (true){
-            menu();
-        }
-
+    public static void displayStudent(int i) {
+        System.out.println(" Student Record ");
+        System.out.println("ID: " + table[i][0]);
+        System.out.println("First Name: " + table[i][1]);
+        System.out.println("Last Name: " + table[i][2]);
+        System.out.println("Midterm Grade: " + table[i][3]);
+        System.out.println("Final Grade: " + table[i][4]);
+        System.out.println("Semester Grade: " + table[i][5]);
+        System.out.println("Remark: " + table[i][6]);
     }
 }
+            
+    
+
+
+  
+         
+
+
+    
